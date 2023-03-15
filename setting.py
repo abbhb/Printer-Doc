@@ -18,6 +18,13 @@ CACHE = {
         "database": "0"
     }
 }
+SECRET_KEY = "reggit20230113.FfG!D3a2AcfrF.2u0C1"
+
+
+class DOC_STATE:
+    PUBLIC = 1
+    draft = 0
+
 
 # 线程锁
 lock = Lock()
@@ -59,3 +66,10 @@ class Setting(object):
         database = data_source.get('database')
         return f"{sql_name}+pymysql://{username}:{password}@{host}:{port}/{database}"
 
+    @staticmethod
+    def get_cache_source_url():
+        cache = CACHE.get("default")
+        host = cache.get("host")
+        port = cache.get("port")
+        database = cache.get("database")
+        return f"redis://{host}:{port}/{database}"

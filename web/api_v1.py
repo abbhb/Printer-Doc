@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask_restx import Api, reqparse, Resource
 
 from web.security import require_token
-from web.action.docs import DocUtil
+from web.action.doc_action import DocUtil
 
 # from app.brushtask import BrushTask
 # from app.rsschecker import RssChecker

@@ -1,7 +1,8 @@
-flask~=2.2.2
+flask==2.2.2
 Flask-SQLAlchemy==3.0.3
 flask-restx==1.1.0
 werkzeug==2.2.3
 sqlalchemy==2.0.4
 pymysql==1.0.2
 pyjwt==2.4.0
+redis~=4.5.1

@@ -15,4 +15,4 @@ App = Flask(__name__)
 App.register_blueprint(api_v1_bp, url_prefix="/api/v1")
 
 if __name__ == '__main__':
-    App.run(debug=True)
+    App.run(host='192.168.12.15', debug=True)

@@ -3,15 +3,18 @@ import datetime
 import hashlib
 from functools import wraps
 
-
 # from Crypto.Cipher import AES
 # from Crypto.Util.Padding import pad
 # from cryptography.fernet import Fernet
 # from base64 import b64encode
-# import jwt
+import jwt
 # from flask import request
 #
 # from app.utils import TokenCache
+from app.db.cache import cache_
+from setting import SECRET_KEY
+
+
 # from config import Config
 
 
@@ -92,9 +95,21 @@ def identify(auth_header: str):
     # return flag, ""
 
 
+def token_decrypt(token: str):
+    alg = ['HS256']
+    data_sec = cache_.get(token)
+    try:
+        result = jwt.decode(data_sec, SECRET_KEY, algorithms=alg)
+    except Exception as e:
+        # todo
+        ...
+    return result
+
+
 def require_token(func):
     """登录保护, 通过token验证用户是否登录"""
     pass
+
 
 # def login_required(func):
 #     """
@@ -179,3 +194,7 @@ def require_token(func):
 #     result = cipher.encrypt(data.encode('utf-8'))
 #     # 使用base64编码
 #     return b64encode(cipher.iv + result).decode('utf-8')
+
+
+if __name__ == '__main__':
+    print(token_decrypt("b2e23a587b7644d790f59b1d34c1ba81"))
