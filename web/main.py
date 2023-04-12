@@ -12,7 +12,7 @@ App = Flask(__name__)
 # App.permanent_session_lifetime = datetime.timedelta(days=30)
 
 # API注册
-App.register_blueprint(api_v1_bp, url_prefix="/api/v1")
+App.register_blueprint(api_v1_bp, url_prefix="/doc/api/v1")
 
 if __name__ == '__main__':
-    App.run(host='192.168.12.15', debug=True)
+    App.run(host='0.0.0.0', debug=True)
