@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_restx import Api, reqparse, Resource
 
+from web.action.proj_action import ProjUtil
 from web.security import require_token
 from web.action.doc_action import DocUtil
 
@@ -89,3 +90,44 @@ class AddDoc(TokenRequired):
             return failed(_msg='required proj_id')
 
         return DocUtil().create_doc(data=args)
+
+
+@projects.route("/add")
+class AddProj(TokenRequired):
+    parser = reqparse.RequestParser()
+
+    parser.add_argument('token', type=str, help='token', location='headers', required=True)
+    parser.add_argument('title', type=str, help='文集标题', location='json', required=True)
+    parser.add_argument('classify_id', type=str, help='分类id', location='json', required=False)
+    parser.add_argument('type', type=str, help='文档类型', location='json', required=True)
+    parser.add_argument('state', type=str, help='文档状态', location='json', required=True)
+    parser.add_argument('passwd', type=str, help='访问码', location='json', required=False)
+    parser.add_argument('intro', type=str, help='文档介绍', location='json', required=False)
+
+    @projects.doc(parser=parser)
+    def post(self):
+        """
+        新建文集
+        """
+        args = self.parser.parse_args()
+        token = args.get('token')
+        title = args.get('title')
+
+        classify_id = args.get('classify_id')
+        type = args.get('type')
+        state = args.get('state')
+        passwd = args.get('passwd')
+        intro = args.get('intro')
+        print(args)
+        if not token:
+            return failed(_code=403, _msg="安全认证未通过，请检查Token")
+        if not title:
+            return failed(_msg='required title')
+        if not type:
+            return failed(_msg='required type')
+        if not state:
+            return failed(_msg='required state')
+        if state == 2 and not passwd:
+            return failed(_msg='required passwd')
+
+        return ProjUtil().create_proj(data=args)

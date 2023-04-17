@@ -1,8 +1,18 @@
-import base64
+import jwt
+
+from setting import SECRET_KEY
 
 
 def get_token_user_id(token):
-    s = token.split(".")[1]
-    s += "=" * ((4 - len(s) % 4) % 4)
-    print(eval(str(base64.urlsafe_b64decode(s), encoding="utf8")))
-    return eval(str(base64.urlsafe_b64decode(s), encoding="utf8"))["id"]
+    failed = False
+    try:
+        data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        print(data)
+        return failed,data["id"]
+    except Exception as e:
+        failed = True
+        return failed,e
+
+if __name__ == '__main__':
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwZXJtaXNzaW9ucyI6IjEiLCJpc3MiOiJhdXRoMCIsImlkIjoiMTY0MDcxNTAyOTQ0NDI1OTg0MSIsInV1aWQiOiIwYmE0YTc1ZTVlOGY0ZGEwYTQxMzJkZmJhNTc1NWE4MSJ9.YEtzQgOeBdJnV3u7E0agoetl7oBCw24f_ZidM50Cgig"
+    print(get_token_user_id(token))

@@ -13,6 +13,7 @@ class DBHelper:
     def select_proj_by_id(self, _id):
         return self._db.query(Project).filter(Project.id == _id)
 
+    @DBPersist(_db)
     def insert_proj(self,proj):
         self._db.insert(proj)
 
