@@ -10,7 +10,10 @@ class ProjUtil:
     def create_proj(self, data=None):
         _proj = Project()
         _proj.title = data.get('title')
-        _proj.content = data.get('content')
+        _proj.classify_id = data.get('classify_id')
+        _proj.create_time = datetime.now()
+        _proj.modify_time = _proj.create_time
+
         # _proj_id = data.get('proj_id')
         token = data.get('token')
         # parse token

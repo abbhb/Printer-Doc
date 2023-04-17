@@ -13,6 +13,8 @@ class DBHelper:
     def select_proj_by_id(self, _id):
         return self._db.query(Project).filter(Project.id == _id)
 
+    def insert_proj(self,proj):
+        self._db.insert(proj)
 
 if __name__ == '__main__':
     dbh = DBHelper()
